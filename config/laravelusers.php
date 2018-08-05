@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laravel-users setting
+    | Laravel-users setting 
     |--------------------------------------------------------------------------
     */
 
@@ -15,7 +15,7 @@ return [
     // Enable Search Users- Uses jQuery Ajax
     'enableSearchUsers'             => true,
 
-    // Users List JS DataTables - not recommended use with pagination a
+    // Users List JS DataTables - not recommended use with pagination
     'enabledDatatablesJs'           => true,
     'datatablesJsStartCount'        => 25,
     'datatablesCssCDN'              => 'https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css',
