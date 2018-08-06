@@ -79,6 +79,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Social');
     }
 
+     /**
+     * Build Role Relationships.
+     *
+     * @var array
+     */
+    public function role()
+    {
+        return $this->belongsToMany('App\Models\Role');
+    }
+
     /**
      * User Profile Relationships.
      *

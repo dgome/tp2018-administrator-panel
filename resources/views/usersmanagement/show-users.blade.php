@@ -36,7 +36,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                @lang('usersmanagement.showing-all-users')
+                                <a href="{{url('users')}}">@lang('usersmanagement.showing-all-users')</a> /
+
+                                @foreach($roles as $rol)
+
+                                <a href="{{url('clientes/role/'.$rol->id)}}">{{$rol->name}}</a> / 
+
+                                @endforeach  
                             </span>
 
                             <div class="btn-group pull-right btn-group-xs">

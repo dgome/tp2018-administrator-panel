@@ -40,7 +40,8 @@ return [
     */
 
     'models' => [
-        'role'       => jeremykenedy\LaravelRoles\Models\Role::class,
+        #'role'       => jeremykenedy\LaravelRoles\Models\Role::class,
+        'role'       => App\Models\Role::class,
         'permission' => jeremykenedy\LaravelRoles\Models\Permission::class,
     ],
 

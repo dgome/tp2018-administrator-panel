@@ -27,6 +27,9 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::get('/activate/{token}', ['as' => 'authenticated.activate', 'uses' => 'Auth\ActivateController@activate']);
     Route::get('/activation', ['as' => 'authenticated.activation-resend', 'uses' => 'Auth\ActivateController@resend']);
+    Route::get('/activacion-cliente/{id}', ['as' => 'authenticated.activation-resend-cliente', 'uses' => 'Auth\ActivateController@resendactivation']);   
+
+
     Route::get('/exceeded', ['as' => 'exceeded', 'uses' => 'Auth\ActivateController@exceeded']);
 
     // Socialite Register Routes
@@ -110,8 +113,27 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
         ],
         'except' => [
             'deleted',
-        ],
+        ]
     ]);
+
+
+    
+    // Route to show users for one role
+    Route::get('clientes/role/{idrole}', [
+        'uses' => 'ClientesManagementController@index',
+    ]);
+
+    Route::resource('clientes', 'ClientesManagementController', [
+        'names' => [
+            #'index'   => 'clientes',
+            'destroy' => 'cliente.destroy',
+        ],
+        'except' => [
+            'deleted','role'
+        ]
+    ]);
+
+
     Route::post('search-users', 'UsersManagementController@search')->name('search-users');
 
     Route::resource('themes', 'ThemesManagementController', [

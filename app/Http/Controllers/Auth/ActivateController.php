@@ -217,6 +217,52 @@ class ActivateController extends Controller
             ->with('message', trans('auth.alreadyActivated'));
     }
 
+
+    /**
+     * Reenviar la activación o activar a un determinado usuario
+     *
+     * @return void
+     */
+    public function resendactivation($id)
+    {
+        $user = User::find($id);
+        $lastActivation = Activation::where('user_id', $user->id)->get()->last();
+        $currentRoute = Route::currentRouteName();
+
+        if ($user->activated == false) {
+            $activationsCount = Activation::where('user_id', $user->id)
+                ->where('created_at', '>=', Carbon::now()->subHours(config('settings.timePeriod')))
+                ->count();
+
+            if ($activationsCount >= config('settings.maxAttempts')) {
+                Log::info('Exceded max resends in last '.config('settings.timePeriod').' hours. '.$currentRoute.'. ', [$user]);
+
+                $data = [
+                    'email' => $user->email,
+                    'hours' => config('settings.timePeriod'),
+                ];
+
+                return view('auth.exceeded')->with($data);
+            }
+
+            $sendEmail = $this->initiateEmailActivation($user);
+
+            Log::info('Activación enviada al usuario. '.$currentRoute.'. ', [$user]);
+
+            return redirect()->route(self::getActivationRoute())
+                ->with('status', 'success')
+                ->with('message', trans('auth.activationSent'));
+        }
+
+        Log::info('Activated user attempte to navigate to '.$currentRoute.'. ', [$user]);
+
+        return $this->activeRedirect($user, $currentRoute)
+            ->with('status', 'info')
+            ->with('message', trans('auth.alreadyActivated'));
+    }
+
+
+
     public function exceeded()
     {
         $user = Auth::user();
