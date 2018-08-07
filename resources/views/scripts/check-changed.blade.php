@@ -5,6 +5,18 @@
     $(this).find('.fa').toggleClass('fa-times');
     $(this).find('.fa').toggleClass('fa-lock');
     $(this).find('span').toggleText('', 'Cancel');
+
+
+    //Utilizamos esto para intercambiar el valor de la clave, para indicar que se ha pulsado el botón de cambiar clave
+    var hiddenField = $('#passwordchange'),
+        val = hiddenField.val();
+
+    hiddenField.val(val === "true" ? "false" : "true");
+
+
+   
+
+
   });
   $("input").keyup(function() {
     checkChanged();

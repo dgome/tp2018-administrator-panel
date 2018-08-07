@@ -11,6 +11,8 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
+                        {{--  
+
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -25,8 +27,26 @@
                             </div>
                         </div>
 
+
+                        --}}
+
+                         <div class="form-group row">
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('NIF-CIF o Email') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="text" class="form-control{{ $errors->has('nifcifemail') ? ' is-invalid' : '' }}" name="nifcifemail" value="{{ old('nifcifemail') }}" required autofocus>
+
+                                @if ($errors->has('nifcifemail'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('nifcifemail') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Clave') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
@@ -43,7 +63,7 @@
                             <div class="col-md-6 offset-md-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Recordarme') }}
                                     </label>
                                 </div>
                             </div>
@@ -56,16 +76,16 @@
                                 </button>
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
+                                    {{ __('¿Olvidaste tu clave?') }}
                                 </a>
                             </div>
                         </div>
 
-                        <p class="text-center mb-3">
+                        {{--  <p class="text-center mb-3">
                             Or Login with
                         </p>
 
-                        @include('partials.socials-icons')
+                        @include('partials.socials-icons') --}} 
 
                     </form>
                 </div>

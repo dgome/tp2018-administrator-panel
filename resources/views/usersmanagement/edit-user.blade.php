@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            @lang('usersmanagement.editing-user', ['name' => $user->name])
+                            @lang('usersmanagement.editing-user', ['name' => $user->first_name])
                             <div class="pull-right">
                                 <a href="{{ route('users') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="top" title="@lang('usersmanagement.tooltips.back-users')">
                                     <i class="fa fa-fw fa-reply-all" aria-hidden="true"></i>
@@ -39,11 +39,13 @@
 
                             {!! csrf_field() !!}
 
+                            <input type="hidden" id="passwordchange" name="passwordchange" value="false">
+
                             <div class="form-group has-feedback row {{ $errors->has('name') ? ' has-error ' : '' }}">
                                 {!! Form::label('name', trans('forms.create_user_label_username'), array('class' => 'col-md-3 control-label')); !!}
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        {!! Form::text('name', $user->name, array('id' => 'name', 'class' => 'form-control', 'placeholder' => trans('forms.create_user_ph_username'))) !!}
+                                        {!! Form::text('name', $user->name, array('id' => 'name', 'class' => 'form-control', 'placeholder' => trans('forms.create_user_ph_username'), 'disabled' => 'disabled')) !!}
                                         <div class="input-group-append">
                                             <label class="input-group-text" for="name">
                                                 <i class="fa fa-fw {{ trans('forms.create_user_icon_username') }}" aria-hidden="true"></i>

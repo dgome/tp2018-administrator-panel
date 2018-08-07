@@ -169,26 +169,57 @@ class UsersManagementController extends Controller
         $emailCheck = ($request->input('email') != '') && ($request->input('email') != $user->email);
         $ipAddress = new CaptureIpTrait();
 
-        if ($emailCheck) {
-            $validator = Validator::make($request->all(), [
-                'name'     => 'required|max:255|unique:users',
-                'email'    => 'email|max:255|unique:users',
-                'password' => 'present|confirmed|min:6',
-            ]);
-        } else {
-            $validator = Validator::make($request->all(), [
-                'name'     => 'required|max:255|unique:users',
-                'password' => 'nullable|confirmed|min:6',
-            ]);
+
+        $validator = Validator::make($request->all(), [
+                    
+                    'first_name'    => 'nullable|max:255',
+                    'last_name'    => 'nullable|max:255',
+                    
+                ]);
+
+
+
+        if($request->passwordchange=='false'){ //Si no cambiamos la clave
+
+             if ($emailCheck) {
+                $validator = Validator::make($request->all(), [
+                    
+                    'email'    => 'email|max:255|unique:users',
+                    
+                ]);
+            } 
+
+
+ 
+
+
+
+        }else{ //Si cambiamos la clave
+
+
+
+            if ($emailCheck) {
+                $validator = Validator::make($request->all(), [                    
+                    'email'    => 'email|max:255|unique:users',
+                    'password' => 'present|confirmed|min:6',
+                ]);
+            } else {
+                $validator = Validator::make($request->all(), [
+                   
+                    'password' => 'nullable|confirmed|min:6',
+                ]);
+            }
+
         }
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        $user->name = $request->input('name');
+        
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
+
 
         if ($emailCheck) {
             $user->email = $request->input('email');
